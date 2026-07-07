@@ -3,26 +3,200 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Welcome</title>
+  <title>Kejdis & Rudina Bakalli</title>
+  <meta name="description" content="Kejdis and Rudina Bakalli serve with Global Church Movements, helping accelerate church movements in digital networks.">
   <style>
+    :root {
+      --white: #ffffff;
+      --soft: rgba(255, 255, 255, 0.82);
+      --accent: #d7194a;
+      --shadow: rgba(0, 0, 0, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--white);
+      background: #141414;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
       display: grid;
-      place-items: center;
-      font-family: Arial, sans-serif;
-      background: #f6f8fa;
-      color: #24292f;
+      align-items: center;
+      overflow: hidden;
+      background-image:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.91) 0%, rgba(0, 0, 0, 0.82) 34%, rgba(0, 0, 0, 0.36) 66%, rgba(0, 0, 0, 0.12) 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.22)),
+        url("assets/hero.png");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .content {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 56px 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 22px;
+      font-size: clamp(0.82rem, 1.5vw, 1.1rem);
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--soft);
+      text-shadow: 0 2px 12px var(--shadow);
     }
 
     h1 {
-      font-size: clamp(2rem, 6vw, 4rem);
+      max-width: 620px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.8rem, 4.7vw, 5.1rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      text-shadow: 0 4px 18px var(--shadow);
+    }
+
+    .summary {
+      max-width: 540px;
+      margin: 22px 0 34px;
+      color: var(--soft);
+      font-size: clamp(1rem, 2vw, 1.18rem);
       font-weight: 700;
-      text-align: center;
+      line-height: 1.55;
+      text-shadow: 0 2px 12px var(--shadow);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 210px;
+      min-height: 64px;
+      padding: 18px 34px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
+    }
+
+    .button:focus-visible {
+      outline: 3px solid var(--white);
+      outline-offset: 4px;
+    }
+
+    .social {
+      position: absolute;
+      left: max(24px, calc((100vw - 1180px) / 2));
+      bottom: 44px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .social::after {
+      content: "";
+      display: block;
+      width: min(440px, 42vw);
+      height: 1px;
+      margin-left: 20px;
+      background: rgba(255, 255, 255, 0.42);
+    }
+
+    .social a {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--white);
+      font-size: 0.96rem;
+      font-weight: 900;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+    }
+
+    .facebook {
+      background: #3b5998;
+    }
+
+    .x {
+      background: #000000;
+    }
+
+    .youtube {
+      background: #d92313;
+    }
+
+    .skype {
+      background: #00aff0;
+    }
+
+    .instagram {
+      background: linear-gradient(135deg, #f9ce34, #ee2a7b 48%, #6228d7);
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        align-items: end;
+        background-position: 57% center;
+      }
+
+      .content {
+        width: min(100% - 32px, 560px);
+        padding: 96px 0 132px;
+      }
+
+      h1 {
+        font-size: clamp(2.35rem, 12vw, 4rem);
+      }
+
+      .button {
+        min-width: 190px;
+        min-height: 58px;
+      }
+
+      .social {
+        left: 16px;
+        right: 16px;
+        bottom: 28px;
+      }
+
+      .social::after {
+        flex: 1;
+        width: auto;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to my website</h1>
+  <main class="hero">
+    <section class="content" aria-label="Kejdis and Rudina Bakalli">
+      <p class="eyebrow">Kejdis & Rudina Bakalli</p>
+      <h1>Accelerating Church Movements in Digital Networks</h1>
+      <p class="summary">Serving with Global Church Movements as a missional component of CRU focused on church planting and church multiplication.</p>
+      <a class="button" href="mailto:info@bakalli.org">Get in touch</a>
+    </section>
+
+    <nav class="social" aria-label="Social links">
+      <a class="facebook" href="#" aria-label="Facebook">f</a>
+      <a class="x" href="#" aria-label="X">X</a>
+      <a class="youtube" href="#" aria-label="YouTube">YT</a>
+      <a class="skype" href="#" aria-label="Skype">S</a>
+      <a class="instagram" href="#" aria-label="Instagram">IG</a>
+    </nav>
+  </main>
 </body>
 </html>
