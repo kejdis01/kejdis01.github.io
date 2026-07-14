@@ -144,7 +144,12 @@
   .field textarea{min-height:150px;resize:vertical;}
   .field input:focus,.field textarea:focus{outline:3px solid rgba(166,17,42,.2);border-color:var(--crimson);}
   .contact-form .btn{border:0;cursor:pointer;justify-self:start;}
+  .contact-form .btn:disabled{opacity:.65;cursor:wait;transform:none;}
   .form-note{font-size:14px;color:var(--ink-soft);}
+  .form-status{display:none;padding:12px 14px;border-left:3px solid;border-radius:3px;font-weight:500;}
+  .form-status.visible{display:block;}
+  .form-status.success{background:#E6EFE0;border-color:var(--olive);color:#34412B;}
+  .form-status.error{background:#F8E4E4;border-color:var(--crimson);color:var(--crimson-dark);}
 
   /* Footer */
   footer{background:var(--ink);color:#C9CDD2;padding:48px 24px;text-align:center;font-size:15px;}
@@ -327,7 +332,12 @@
         <hr class="thread">
         <p>Send us a note and we'll reply as soon as we can.</p>
       </div>
-      <form class="contact-form rise" action="mailto:bakalli@gmail.com" method="POST" enctype="text/plain">
+      <form class="contact-form rise" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="064f0a12-7454-448f-aff3-81a51bd805d1">
+        <input type="hidden" name="subject" value="New message from bakalli.org">
+        <input type="hidden" name="from_name" value="bakalli.org contact form">
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
         <div class="field">
           <label for="contact-name">Name</label>
           <input id="contact-name" name="name" type="text" autocomplete="name" required>
@@ -340,8 +350,8 @@
           <label for="contact-message">Message</label>
           <textarea id="contact-message" name="message" required></textarea>
         </div>
-        <button class="btn btn-primary" type="submit">Send via email</button>
-        <p class="form-note">This opens your email app with the message addressed to <a href="mailto:bakalli@gmail.com">bakalli@gmail.com</a>.</p>
+        <button class="btn btn-primary" id="contact-submit" type="submit">Send message</button>
+        <p class="form-note">Your information is sent securely and will only be used to respond to your message.</p>
       </form>
     </div>
   </div>
@@ -366,6 +376,38 @@
     }, { threshold: 0.15 });
     items.forEach(el => io.observe(el));
   }
+
+  const contactForm = document.getElementById('contact-form');
+  const contactStatus = document.getElementById('form-status');
+  const contactSubmit = document.getElementById('contact-submit');
+
+  contactForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    contactStatus.className = 'form-status';
+    contactStatus.textContent = '';
+    contactSubmit.disabled = true;
+    contactSubmit.textContent = 'Sending...';
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { Accept: 'application/json' }
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.message || 'Submission failed');
+
+      contactForm.reset();
+      contactStatus.textContent = 'Thank you. Your information has been sent successfully.';
+      contactStatus.className = 'form-status success visible';
+    } catch (error) {
+      contactStatus.textContent = 'We could not send your message. Please try again in a moment.';
+      contactStatus.className = 'form-status error visible';
+    } finally {
+      contactSubmit.disabled = false;
+      contactSubmit.textContent = 'Send message';
+    }
+  });
 
 </script>
 
