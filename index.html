@@ -145,8 +145,6 @@
   .field input:focus,.field textarea:focus{outline:3px solid rgba(166,17,42,.2);border-color:var(--crimson);}
   .contact-form .btn{border:0;cursor:pointer;justify-self:start;}
   .form-note{font-size:14px;color:var(--ink-soft);}
-  .form-status{display:none;padding:12px 14px;background:#E6EFE0;border-left:3px solid var(--olive);border-radius:3px;}
-  .form-status.visible{display:block;}
 
   /* Footer */
   footer{background:var(--ink);color:#C9CDD2;padding:48px 24px;text-align:center;font-size:15px;}
@@ -329,12 +327,7 @@
         <hr class="thread">
         <p>Send us a note and we'll reply as soon as we can.</p>
       </div>
-      <form class="contact-form rise" action="https://formsubmit.co/bakalli@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="New message from bakalli.org">
-        <input type="hidden" name="_next" value="https://bakalli.org/?sent=1#contact">
-        <input type="hidden" name="_template" value="table">
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
-        <p class="form-status" id="form-status" role="status">Thank you. Your message has been sent.</p>
+      <form class="contact-form rise" action="mailto:bakalli@gmail.com" method="POST" enctype="text/plain">
         <div class="field">
           <label for="contact-name">Name</label>
           <input id="contact-name" name="name" type="text" autocomplete="name" required>
@@ -347,8 +340,8 @@
           <label for="contact-message">Message</label>
           <textarea id="contact-message" name="message" required></textarea>
         </div>
-        <button class="btn btn-primary" type="submit">Send message</button>
-        <p class="form-note">Your details will only be used to respond to your message.</p>
+        <button class="btn btn-primary" type="submit">Send via email</button>
+        <p class="form-note">This opens your email app with the message addressed to <a href="mailto:bakalli@gmail.com">bakalli@gmail.com</a>.</p>
       </form>
     </div>
   </div>
@@ -374,11 +367,6 @@
     items.forEach(el => io.observe(el));
   }
 
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('sent') === '1') {
-    document.getElementById('form-status').classList.add('visible');
-    history.replaceState({}, '', `${window.location.pathname}#contact`);
-  }
 </script>
 
 <script>
