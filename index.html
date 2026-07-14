@@ -130,6 +130,24 @@
   .way a{font-weight:700;text-decoration:none;}
   .way a:hover{text-decoration:underline;}
 
+  /* Contact */
+  .contact{background:var(--stone);}
+  .contact-grid{display:grid;grid-template-columns:4fr 7fr;gap:64px;align-items:start;}
+  .contact-intro p{margin-top:18px;color:var(--ink-soft);}
+  .contact-form{display:grid;gap:20px;background:#fff;padding:36px;border-radius:6px;box-shadow:0 18px 40px -24px rgba(36,43,49,.35);}
+  .field{display:grid;gap:7px;}
+  .field label{font-weight:700;font-size:15px;}
+  .field input,.field textarea{
+    width:100%;font:inherit;color:var(--ink);background:#fff;
+    border:1px solid #B8B3A8;border-radius:4px;padding:12px 14px;
+  }
+  .field textarea{min-height:150px;resize:vertical;}
+  .field input:focus,.field textarea:focus{outline:3px solid rgba(166,17,42,.2);border-color:var(--crimson);}
+  .contact-form .btn{border:0;cursor:pointer;justify-self:start;}
+  .form-note{font-size:14px;color:var(--ink-soft);}
+  .form-status{display:none;padding:12px 14px;background:#E6EFE0;border-left:3px solid var(--olive);border-radius:3px;}
+  .form-status.visible{display:block;}
+
   /* Footer */
   footer{background:var(--ink);color:#C9CDD2;padding:48px 24px;text-align:center;font-size:15px;}
   footer a{color:#fff;}
@@ -146,7 +164,7 @@
 
   @media (max-width:820px){
     section{padding:64px 0;}
-    .story-grid,.serve-grid{grid-template-columns:1fr;gap:36px;}
+    .story-grid,.serve-grid,.contact-grid{grid-template-columns:1fr;gap:36px;}
     .work-grid{grid-template-columns:1fr;gap:32px;}
     .ways-grid{grid-template-columns:1fr;}
     .hero-inner{padding:100px 24px 56px;}
@@ -295,8 +313,43 @@
       <div class="way rise">
         <h3>Get in touch</h3>
         <p>Have a question, want us to share at your church, or just want to say hello? We'd love to hear from you.</p>
-        <p style="margin-top:14px;"><a href="mailto:rudina.bakalli@cru.org">Send us an email &rarr;</a></p>
+        <p style="margin-top:14px;"><a href="#contact">Send us a message &rarr;</a></p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-intro rise">
+        <p class="eyebrow">Contact us</p>
+        <h2>We'd love to hear from you</h2>
+        <hr class="thread">
+        <p>Send us a note and we'll reply as soon as we can.</p>
+      </div>
+      <form class="contact-form rise" action="https://formsubmit.co/bakalli@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New message from bakalli.org">
+        <input type="hidden" name="_next" value="https://bakalli.org/?sent=1#contact">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+        <p class="form-status" id="form-status" role="status">Thank you. Your message has been sent.</p>
+        <div class="field">
+          <label for="contact-name">Name</label>
+          <input id="contact-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="contact-email">Email</label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Send message</button>
+        <p class="form-note">Your details will only be used to respond to your message.</p>
+      </form>
     </div>
   </div>
 </section>
@@ -319,6 +372,12 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: 0.15 });
     items.forEach(el => io.observe(el));
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('sent') === '1') {
+    document.getElementById('form-status').classList.add('visible');
+    history.replaceState({}, '', `${window.location.pathname}#contact`);
   }
 </script>
 
